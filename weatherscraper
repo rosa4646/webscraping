@@ -1,0 +1,23 @@
+from bs4.element import TemplateString
+from bs4 import BeautifulSoup
+import requests, lxml
+
+prompt = input("Do you want to search for the weather? (yes/no/y/n) ")
+if prompt == "y":
+    city = input("What city do you want to search? ")
+    state = input("What state is the city in? ")
+elif prompt == "n":
+    print("See ya!")
+else:
+    print("ERROR! Please use proper syntax! :( ")
+
+url = f"https://www.google.com/search?q=weather+{city}+{state}"
+req = requests.get(url)
+soup = BeautifulSoup(req.text, 'lxml')
+temp = soup.find_all('div', attrs={"class": "BNeawe iBp4i AP7nwnd"})
+wind = soup.find_all('div', attrs={"class": "BNeawe iBp4i AP7nwnd"})
+
+# kill me 
+
+for x in soup.find_all('div'):
+    print(x.get("href"))
